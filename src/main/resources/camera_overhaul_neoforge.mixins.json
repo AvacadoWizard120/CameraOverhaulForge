@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.confusingfool.cameraoverhaulneoforge.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "CameraOverhaulNeoForge.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "CameraMixin",
+    "GameRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

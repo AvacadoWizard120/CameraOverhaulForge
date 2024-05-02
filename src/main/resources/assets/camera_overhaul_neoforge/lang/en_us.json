@@ -1,0 +1,14 @@
+{
+  "camera_overhaul_neoforge.config.title": "CameraOverhaul Settings",
+  "camera_overhaul_neoforge.config.category.general": "General",
+  "camera_overhaul_neoforge.config.enabled.name": "Enable the mod's effects",
+  "camera_overhaul_neoforge.config.enabled.tooltip": "Toggles all of the mod's features.",
+  "camera_overhaul_neoforge.config.strafingrollfactor.name": "Strafing Roll Factor",
+  "camera_overhaul_neoforge.config.strafingrollfactor.tooltip": "Controls the strength of the camera roll rotation caused by strafing, or sideway horizontal velocity.",
+  "camera_overhaul_neoforge.config.yawdeltarollfactor.name": "Mouselook Roll Factor",
+  "camera_overhaul_neoforge.config.yawdeltarollfactor.tooltip": "Controls the strength of the camera roll rotation caused by turning around horizontally.",
+  "camera_overhaul_neoforge.config.verticalvelocitypitchfactor.name": "Vertical Velocity Pitch Factor",
+  "camera_overhaul_neoforge.config.verticalvelocitypitchfactor.tooltip": "Controls the strength of the camera pitch rotation offset caused by vertical velocity.",
+  "camera_overhaul_neoforge.config.forwardvelocitypitchfactor.name": "Forward Velocity Pitch Factor",
+  "camera_overhaul_neoforge.config.forwardvelocitypitchfactor.tooltip": "Controls the strength of the camera pitch rotation offset caused by moving forward or backwards."
+}
