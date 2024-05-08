@@ -1,0 +1,116 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = 'https://repo.spongepowered.org/maven' }
+        maven { url = 'https://plugins.gradle.org/m2' }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'com.github.johnrengelman.shadow'
+//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+
+version = "${mc_version}-${mod_version}"
+group = "com.confusingfool.cameraoverhaulreforged"
+archivesBaseName = "CameraOverhaulReforged"
+
+sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+
+    version = "${mc_version}-${forge_version}"
+    mappings = project.mappings_version
+    runDir = "run"
+    makeObfSourceJar = false
+    useDepAts = true
+    //Makes those replacement changes to the main mod class.
+
+    replace '@VERSION@', project.version
+    //Replaces all text that matches the left side with the right.
+    replace '@FINGERPRINT@', project.findProperty('signSHA1')
+    //Makes those replacement changes to the main mod class.
+    //My mod class is set in my project's gradle.properties file.
+    replaceIn "ModCyclic.java"
+}
+
+jar.manifest.attributes(
+        'FMLCorePluginContainsFMLMod': true,
+        'FMLCorePlugin': 'com.confusingfool.cameraoverhaulreforged.MixinPlugin',
+        'ForceLoadAsMod': true,
+        'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker'
+)
+
+task signJar(type: SignJar, dependsOn: reobfJar) {
+    onlyIf {
+        project.hasProperty('keyStore')
+    }
+
+    // findProperty allows us to reference the property without it existing.
+    // Using project.propName would cause the script to fail validation if
+    // the property did not exist.
+    keyStore = project.findProperty('keyStore')
+    alias = project.findProperty('keyStoreAlias')
+    storePass = project.findProperty('keyStorePass')
+    keyPass = project.findProperty('keyStoreKeyPass')
+    inputFile = jar.archivePath
+    outputFile = jar.archivePath
+}
+
+//Defines basic patterns for pulling various dependencies.
+repositories {
+    flatDir { dir 'libs' }
+    //   maven { url 'https://www.cursemaven.com'  }
+    maven { url "https://dvs1.progwml6.com/files/maven"    }
+    maven { url "https://maven.theillusivec4.top/"    }
+    maven { url "https://maven.blamejared.com" }
+    maven { url "https://maven.blamejared.com/vazkii" }
+    maven { url "https://minecraft.curseforge.com/api/maven/"    }
+    maven { url "https://maven.thiakil.com/"    }
+    maven { url "https://maven.mcmoddev.com"	}
+    maven { url "https://maven.amadornes.com/" }
+    mavenCentral()
+    maven { url = 'https://repo.spongepowered.org/maven' }
+}
+
+dependencies {
+    //if any dependencies fail to fetch, download and put in ./libs/
+    compile 'org.spongepowered:mixin:0.8.2'
+}
+
+mixin {
+    add sourceSets.main, 'mixins.cameraoverhaulreforged.refmap.json'
+}
+
+processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+task cleanJar {
+    delete 'build/libs'
+}

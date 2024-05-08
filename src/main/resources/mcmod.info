@@ -1,0 +1,16 @@
+[
+{
+  "modid": "cameraoverhaulreforged",
+  "name": "Camera Overhaul Reforged",
+  "description": "A port of Mirsario's Camera Overhaul (fabric) to forge 1.12.2",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Eden Urias (ConfusingFool93, AvacadoWizard120)"],
+  "credits": "EEEEEEEEEEE",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
