@@ -23,7 +23,7 @@ public abstract class CameraMixin {
     private void OnCameraUpdate(BlockGetter area, Entity focusedEntity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci) {
         Transform cameraTransform = new Transform(getPosition(), new Vec3(getXRot(), getYRot(), 0d));
 
-        CameraUpdateCallback.EVENT.Invoker().OnCameraUpdate((Camera) (Object) this, cameraTransform, tickDelta);
+        CameraUpdateCallback.EVENT.Invoker().OnCameraUpdate(focusedEntity, (Camera)(Object)this, cameraTransform, tickDelta);
 
         cameraTransform = ModifyCameraTransformCallback.EVENT.Invoker().ModifyCameraTransform((Camera) (Object) this, cameraTransform);
 

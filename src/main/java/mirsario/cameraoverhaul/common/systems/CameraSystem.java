@@ -8,6 +8,7 @@ import mirsario.cameraoverhaul.core.structures.Transform;
 import mirsario.cameraoverhaul.core.utils.MathUtils;
 import mirsario.cameraoverhaul.core.utils.Vec2fUtils;
 import net.minecraft.client.Camera;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
@@ -30,12 +31,16 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 	}
 
 	@Override
-	public void OnCameraUpdate(Camera camera, Transform cameraTransform, float deltaTime) {
+	public void OnCameraUpdate(Entity focusedEntity, Camera camera, Transform cameraTransform, float deltaTime)
+	{
+		boolean isFlying = false;
+		boolean isSwimming = false;
 
-		Player focusedEntity = (Player) camera.getEntity();
+		if (focusedEntity instanceof Player player) {
 
-		boolean isFlying = focusedEntity.isFallFlying();
-		boolean isSwimming = focusedEntity.isSwimming();
+            isFlying = player.isFallFlying();
+			isSwimming = player.isSwimming();
+		}
 
 		//Reset the offset transform
 		offsetTransform.position = new Vec3(0d, 0d, 0d);

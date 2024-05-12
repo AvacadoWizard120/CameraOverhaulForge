@@ -34,7 +34,7 @@ public abstract class LegacyCameraMixin {
         GL11.glRotatef((float) cameraTransform.eulerRot.y + 180.0f, 0f, -1f, 0f);
         GL11.glRotatef((float) cameraTransform.eulerRot.x, -1f, 0f, 0f);
 
-        CameraUpdateCallback.EVENT.Invoker().OnCameraUpdate((Camera) (Object) this, cameraTransform, tickDelta);
+        CameraUpdateCallback.EVENT.Invoker().OnCameraUpdate(focusedEntity, (Camera)(Object)this, cameraTransform, tickDelta);
 
         cameraTransform = ModifyCameraTransformCallback.EVENT.Invoker().ModifyCameraTransform((Camera) (Object) this, cameraTransform);
 
