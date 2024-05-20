@@ -1,5 +1,6 @@
 package mirsario.cameraoverhaul.common.systems;
 
+import mirsario.cameraoverhaul.CameraOverhaulEntryPoint;
 import mirsario.cameraoverhaul.common.CameraOverhaul;
 import mirsario.cameraoverhaul.common.configuration.ConfigData;
 import mirsario.cameraoverhaul.core.callbacks.CameraUpdateCallback;
@@ -18,12 +19,12 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 	private static double prevVerticalVelocityPitchOffset;
 	private static double prevStrafingRollOffset;
 	private static double prevCameraYaw;
-	//private static double prevYawDeltaRollOffset;
 	private static double yawDeltaRollOffset;
 	private static double yawDeltaRollTargetOffset;
 	private static final Transform offsetTransform = new Transform();
 
-	public CameraSystem() {
+	public CameraSystem()
+	{
 		CameraUpdateCallback.EVENT.Register(this);
 		ModifyCameraTransformCallback.EVENT.Register(this);
 
@@ -54,8 +55,12 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 
 		float strafingRollFactorToUse = config.strafingRollFactor;
 
-		if (isFlying) {
-			strafingRollFactorToUse = config.getStrafingRollFactorWhenFlying;
+		if (isFlying)
+		{
+			if (!CameraOverhaulEntryPoint.isBarrelRollLoaded)
+			{
+				strafingRollFactorToUse = config.getStrafingRollFactorWhenFlying;
+			}
 		} else if (isSwimming)
 		{
 			strafingRollFactorToUse = config.getGetStrafingRollFactorWhenSwimming;
@@ -64,14 +69,19 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		Vec3 velocity = camera.getEntity().getDeltaMovement();
 		Vec2 relativeXZVelocity = Vec2fUtils.Rotate(new Vec2((float) velocity.x, (float) velocity.z), 360f - (float) cameraTransform.eulerRot.y);
 
-		//X
-		VerticalVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.verticalVelocityPitchFactor, config.verticalVelocitySmoothingFactor);
-		ForwardVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.forwardVelocityPitchFactor, config.horizontalVelocitySmoothingFactor);
-		//Z
-		YawDeltaRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.yawDeltaRollFactor * 1.25f, config.yawDeltaSmoothingFactor, config.yawDeltaDecayFactor);
-		StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, strafingRollFactorToUse, config.horizontalVelocitySmoothingFactor);
+		if (CameraOverhaulEntryPoint.isBarrelRollLoaded && strafingRollFactorToUse == config.getStrafingRollFactorWhenFlying)
+		{
+			CameraOverhaul.Logger.info("Barrel Roll is loaded");
+		} else {
+			//X
+			VerticalVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.verticalVelocityPitchFactor, config.verticalVelocitySmoothingFactor);
+			ForwardVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.forwardVelocityPitchFactor, config.horizontalVelocitySmoothingFactor);
+			//Z
+			YawDeltaRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.yawDeltaRollFactor * 1.25f, config.yawDeltaSmoothingFactor, config.yawDeltaDecayFactor);
+			StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, strafingRollFactorToUse, config.horizontalVelocitySmoothingFactor);
 
-		prevCameraYaw = cameraTransform.eulerRot.y;
+			prevCameraYaw = cameraTransform.eulerRot.y;
+		}
 	}
 
 	@Override
