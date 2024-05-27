@@ -1,5 +1,6 @@
 package com.confusingfool.cameraoverhaulneoforge.common.systems;
 
+import com.confusingfool.cameraoverhaulneoforge.CameraOverhaulNeoForge;
 import com.confusingfool.cameraoverhaulneoforge.common.CameraOverhaul;
 import com.confusingfool.cameraoverhaulneoforge.common.configuration.ConfigData;
 import com.confusingfool.cameraoverhaulneoforge.core.callbacks.CameraUpdateCallback;
@@ -60,12 +61,15 @@ public class CameraSystem implements CameraUpdateCallback, ModifyCameraTransform
         Vec3 velocity = camera.getEntity().getDeltaMovement();
         Vec2 relativeXZVelocity = Vec2fUtils.Rotate(new Vec2((float) velocity.x, (float) velocity.z), 360f - (float) cameraTransform.eulerRot.y);
 
-        //X
-        VerticalVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.verticalVelocityPitchFactor, config.verticalVelocitySmoothingFactor);
-        ForwardVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.forwardVelocityPitchFactor, config.horizontalVelocitySmoothingFactor);
-        //Z
-        YawDeltaRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.yawDeltaRollFactor * 1.25f, config.yawDeltaSmoothingFactor, config.yawDeltaDecayFactor);
-        StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, strafingRollFactorToUse, config.horizontalVelocitySmoothingFactor);
+        if (strafingRollFactorToUse == config.getStrafingRollFactorWhenFlying && !CameraOverhaulNeoForge.ClientModEvents.isBarrelLoaded)
+        {
+            //X
+            VerticalVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.verticalVelocityPitchFactor, config.verticalVelocitySmoothingFactor);
+            ForwardVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.forwardVelocityPitchFactor, config.horizontalVelocitySmoothingFactor);
+            //Z
+            YawDeltaRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.yawDeltaRollFactor * 1.25f, config.yawDeltaSmoothingFactor, config.yawDeltaDecayFactor);
+            StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, strafingRollFactorToUse, config.horizontalVelocitySmoothingFactor);
+        }
 
         prevCameraYaw = cameraTransform.eulerRot.y;
     }
