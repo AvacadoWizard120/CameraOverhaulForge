@@ -12,21 +12,23 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.swing.text.html.parser.Entity;
-
 @Mixin(Camera.class)
 public abstract class CameraMixin
 {
-    @Shadow abstract float getXRot();
-    @Shadow abstract float getYRot();
-    @Shadow abstract Vec3 getPosition();
-    @Shadow abstract void setRotation(float yaw, float pitch);
+    @Shadow
+    public abstract float getXRot();
+    @Shadow
+    public abstract float getYRot();
+    @Shadow
+    public abstract Vec3 getPosition();
+    @Shadow
+    protected abstract void setRotation(float yaw, float pitch);
 
     @Inject(method = "setup", at = @At("RETURN"))
     private void OnCameraUpdate(BlockGetter pLevel, net.minecraft.world.entity.Entity pEntity, boolean pDetached, boolean pThirdPersonReverse, float pPartialTick, CallbackInfo ci) {
         Transform cameraTransform = new Transform(getPosition(), new Vec3(getXRot(), getYRot(), 0d));
 
-        CameraUpdateCallback.EVENT.Invoker().OnCameraUpdate((Camera) (Object) this, cameraTransform, pPartialTick);
+        CameraUpdateCallback.EVENT.Invoker().OnCameraUpdate(pEntity, (Camera) (Object) this, cameraTransform, pPartialTick);
 
         cameraTransform = ModifyCameraTransformCallback.EVENT.Invoker().ModifyCameraTransform((Camera) (Object) this, cameraTransform);
 
