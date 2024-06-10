@@ -11,3 +11,9 @@ This mod is for forge, you may find the fabric version here: https://www.cursefo
 
 ### Can I turn off X and only keep Y?
 You can find the configuration file with intensity scaling for all features at `.minecraft/config/cameraoverhaul.json`. Set a factor to 0.0 to turn the feature off. You can also use negative numbers there, if that's your thing.
+
+# Contributors
+
+<a href="https://github.com/AvacadoWizard120/CameraOverhaulForge/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=AvacadoWizard120/CameraOverhaulForge" />
+</a>
