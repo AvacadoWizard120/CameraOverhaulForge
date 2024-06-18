@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "io.github.avacadowizard120.cameraoverhaulreforged.mixins",
+  "compatibilityLevel": "JAVA_16",
+  "refmap": "cameraoverhaulreforged.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "CameraMixin",
+    "GameRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}
