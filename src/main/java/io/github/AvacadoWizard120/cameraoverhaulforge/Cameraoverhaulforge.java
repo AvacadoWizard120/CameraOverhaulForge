@@ -3,9 +3,11 @@ package io.github.AvacadoWizard120.cameraoverhaulforge;
 import com.mojang.logging.LogUtils;
 import io.github.AvacadoWizard120.cameraoverhaulforge.systems.CameraSystem;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -19,7 +21,8 @@ public class Cameraoverhaulforge {
 
     public static CameraSystem camera;
 
-    public Cameraoverhaulforge() {
+    public Cameraoverhaulforge(FMLJavaModLoadingContext context) {
+        MinecraftForge.EVENT_BUS.register(this);
         instance = this;
     }
 
@@ -28,12 +31,6 @@ public class Cameraoverhaulforge {
         camera = new CameraSystem();
         LOGGER.info("Camera system initialized: {}", camera);
     }
-
-//    public Cameraoverhaulforge(FMLJavaModLoadingContext context) {
-//        MinecraftForge.EVENT_BUS.register(this);
-//
-//    }
-
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
@@ -44,7 +41,7 @@ public class Cameraoverhaulforge {
             if (instance != null) {
                 instance.onInitializeClient();
             } else {
-                LOGGER.error("Instance of Cameraoverhaulneoforge is null during client setup!");
+                LOGGER.error("Instance of Cameraoverhaulforge is null during client setup!");
             }
         }
     }
