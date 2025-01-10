@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "io.github.AvacadoWizard120.cameraoverhaulneoforge.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "cameraoverhaulneoforge.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "CameraMixin",
+    "ExplosionMixin",
+    "GameRendererMixin",
+    "LightningBoltMixin",
+    "LocalPlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,24 @@
+# Main Class
+cpw.mods.bootstraplauncher.BootstrapLauncher
+
+# NeoForge Run-Type Program Arguments
+--launchTarget
+neoforgeclientdev
+--version
+21.4.50-beta
+--assetIndex
+19
+--assetsDir
+C:\\Users\\edenj\\.gradle\\caches\\neoformruntime\\assets
+--gameDir
+.
+--fml.fmlVersion
+6.0.4
+--fml.mcVersion
+1.21.4
+--fml.neoForgeVersion
+21.4.50-beta
+--fml.neoFormVersion
+20241203.161809
+
+# User Supplied Program Arguments
