@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "io.github.AvacadoWizard120.cameraoverhaulforge.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "cameraoverhaulforge.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "CameraMixin",
+    "ExplosionMixin",
+    "GameRendererMixin",
+    "LightningBoltMixin",
+    "LocalPlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
