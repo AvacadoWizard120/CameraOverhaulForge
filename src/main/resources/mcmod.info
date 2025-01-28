@@ -1,0 +1,16 @@
+[
+	{
+		"modid": "cameraoverhaul",
+		"name": "Camera Overhaul",
+		"description": "A backport of Mirsario's Camera Overhaul mod for forge.",
+		"version": "${version}",
+		"mcversion": "1.12.2",
+		"url": "",
+		"updateUrl": "",
+		"authorList": ["Mirsario, AvacadoWizard120 (confusingfool93)"],
+		"credits": "",
+		"logoFile": "logo.png",
+		"screenshots": [],
+		"dependencies": []
+	}
+]
