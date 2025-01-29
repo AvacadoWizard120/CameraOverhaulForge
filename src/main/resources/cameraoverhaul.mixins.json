@@ -5,6 +5,10 @@
   "refmap": "cameraoverhaul.refmap.json",
   "mixins": [
   ],
-  "client": [],
+  "client": [
+    "CameraMixin",
+    "GameRendererMixin",
+    "LightningBoltMixin"
+  ],
   "server": []
 }
